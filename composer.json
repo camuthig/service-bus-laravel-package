@@ -1,0 +1,40 @@
+{
+    "name": "camuthig/service-bus-laravel-package",
+    "description": "A package for leveraging the Prooph Service Bus in a Laravel project",
+    "type": "library",
+    "license": "BSD-3",
+    "authors": [
+        {
+            "name": "Chris Muthig",
+            "email": "camuthig@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "prooph/service-bus": "^6.1",
+        "symfony/stopwatch": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Camuthig\\ServiceBus\\Package\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Camuthig\\ServiceBus\\Package\\Test\\": "tests"
+        }
+    },
+    "require-dev": {
+        "laravel/framework": "5.5.*",
+        "orchestra/testbench": "^3.5",
+        "react/promise": "^2.5",
+        "barryvdh/laravel-debugbar": "^3.1"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Camuthig\\ServiceBus\\Package\\ServiceBusServiceProvider"
+            ]
+        }
+    }
+}
