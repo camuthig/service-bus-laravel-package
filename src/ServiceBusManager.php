@@ -60,7 +60,7 @@ class ServiceBusManager implements ServiceBusManagerContract
 
             $bus = $this->make(CommandBus::class, $name, $config);
 
-            $this->addPlugins($bus, $config['plugins'] ?? []);
+            $this->addPlugins($bus, $config);
 
             if (config('app.debug')) {
                 $this->addDebugger($bus);
@@ -85,7 +85,7 @@ class ServiceBusManager implements ServiceBusManagerContract
 
             $bus = $this->make(EventBus::class, $name, $config);
 
-            $this->addPlugins($bus, $config['plugins'] ?? []);
+            $this->addPlugins($bus, $config);
 
             if (config('app.debug')) {
                 $this->addDebugger($bus);
@@ -110,7 +110,7 @@ class ServiceBusManager implements ServiceBusManagerContract
 
             $bus = $this->make(QueryBus::class, $name, $config);
 
-            $this->addPlugins($bus, $config['plugins'] ?? []);
+            $this->addPlugins($bus, $config);
 
             if (config('app.debug')) {
                 $this->addDebugger($bus);
@@ -180,7 +180,7 @@ class ServiceBusManager implements ServiceBusManagerContract
         }
     }
 
-    protected function addPlugins(MessageBus $bus, array $plugins): void
+    protected function addPlugins(MessageBus $bus, array $config): void
     {
         // Add a message factory plugin to the bus
         $messageFactory = $this->app->make($config['message_factory'] ?? FQCNMessageFactory::class);
@@ -202,6 +202,8 @@ class ServiceBusManager implements ServiceBusManagerContract
         $loggingPlugin->attachToMessageBus($bus);
 
         // Add configured plugins
+        $plugins = $config['plugins'] ?? [];
+
         foreach ($plugins as $plugin) {
             /** @var Plugin $plugin */
             $plugin = $this->app->make($plugin);
