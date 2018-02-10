@@ -33,7 +33,7 @@ class ResolverPlugin extends AbstractPlugin
             function (ActionEvent $actionEvent): void {
                 $messageHandlerAlias = $actionEvent->getParam(MessageBus::EVENT_PARAM_MESSAGE_HANDLER);
 
-                if (is_string($messageHandlerAlias) && $this->app->make($messageHandlerAlias)) {
+                if (is_string($messageHandlerAlias)) {
                     $actionEvent->setParam(MessageBus::EVENT_PARAM_MESSAGE_HANDLER, $this->app->make($messageHandlerAlias));
                 }
 
@@ -42,7 +42,9 @@ class ResolverPlugin extends AbstractPlugin
                 $newEventListeners = [];
 
                 foreach ($currentEventListeners as $key => $eventListenerAlias) {
-                    $newEventListeners[$key] = $this->app->make($eventListenerAlias);
+                    if (is_string($eventListenerAlias)) {
+                        $newEventListeners[$key] = $this->app->make($eventListenerAlias);
+                    }
                 }
 
                 // merge array whilst preserving numeric keys and giving priority to newEventListeners
