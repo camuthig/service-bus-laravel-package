@@ -39,6 +39,7 @@ class MessageProducer implements MessageProducerContract
             throw new RuntimeException(__CLASS__ . ' cannot handle query messages which require future responses.');
         }
 
+
         $this->dispatcher->dispatchToQueue(new ProophJob($message));
     }
 }
